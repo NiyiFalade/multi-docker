@@ -17,4 +17,4 @@ after_success:
    - docker push nf/multi-client
    - docker push nf/multi-nginx
    - docker push nf/multi-server
-   - docker push nf/multi-multi-worker
+   - docker push nf/multi-worker
