@@ -3,18 +3,18 @@ services:
   - docker
 
 before_install:
-  - docker build -t nf/multi-react -f ./client/Dockerfile.dev ./client
+  - docker build -t blackstar500/multi-react -f ./client/Dockerfile.dev ./client
 
 script:
-  - docker run -e CI=true nf/multi-react npm run test -- --coverage
+  - docker run -e CI=true blackstar500/multi-react npm run test -- --coverage
 
 after_success:
-   - docker build -t nf/multi-client ./client
-   - docker build -t nf/multi-nginx ./nginx
-   - docker build -t nf/multi-server ./server
-   - docker build -t nf/multi-worker ./worker
+   - docker build -t blackstar500/multi-client ./client
+   - docker build -t blackstar500/multi-nginx ./nginx
+   - docker build -t blackstar500/multi-server ./server
+   - docker build -t blackstar500/multi-worker ./worker
    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
-   - docker push nf/multi-client
-   - docker push nf/multi-nginx
-   - docker push nf/multi-server
-   - docker push nf/multi-worker
+   - docker push blackstar500/multi-client
+   - docker push blackstar500/multi-nginx
+   - docker push blackstar500/multi-server
+   - docker push blackstar500/multi-worker
