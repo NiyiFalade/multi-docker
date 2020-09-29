@@ -1,0 +1,20 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t nf/multi-react -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true nf/mulit-react npm run test -- --coverage
+
+after_success:
+   - docker build -t nf/multi-client ./client
+   - docker build -t nf/multi-nginx ./nginx
+   - docker build -t nf/multi-server ./server
+   - docker build -t nf/multi-worker ./worker
+   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+   - docker push nf/multi-client
+   - docker push nf/multi-nginx
+   - docker push nf/multi-server
+   - docker push nf/multi-multi-worker
